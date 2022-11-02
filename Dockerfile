@@ -3,7 +3,7 @@ FROM alpine as builder
 # Install basic package to compile source code
 RUN apk add alpine-sdk
 # Follow the install guide from creator of pigpio, http://abyz.me.uk/rpi/pigpio/download.html
-RUN wget --output-document=download.zip https://github.com/joan2937/pigpio/archive/master.zip \
+RUN wget --output-document=download.zip https://github.com/Woocash9/pigpio/archive/master.zip \
 # Downloaded content is placed inside specific folder to not be depended of branch naming from repo
     && mkdir download \
     && unzip -d download download.zip \
@@ -16,7 +16,8 @@ RUN wget --output-document=download.zip https://github.com/joan2937/pigpio/archi
 FROM alpine
 # Running pigpiod in foreground then container should request SIGKILL right away and not the default SIGTERM, wait 10 sec., and then SIGKILL. 
 STOPSIGNAL SIGKILL
-LABEL maintainer="zinen@users.noreply.github.com"
+LABEL maintainer="woocash9@users.noreply.github.com"
+
 COPY --from=builder /usr/local /usr/local
 # Copy app into image
 COPY start.sh /start.sh
